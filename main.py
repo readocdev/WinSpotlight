@@ -12,8 +12,13 @@ from src.hotkeys import HotKeys
 from src.capture import CameraManager
 from src.devices import eject_all, eject_by_letter
 
-
 class WinEventFilter(QAbstractNativeEventFilter):
+    """
+    Windows-specific event filter for intercepting native system messages.
+
+    This filter captures the WM_HOTKEY (0x0312) message from the Windows message
+    loop and forwards it to the HotKeys manager for processing.
+    """
     def __init__(self, manager: HotKeys):
         super().__init__()
         self.manager = manager
