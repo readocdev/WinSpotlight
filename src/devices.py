@@ -34,6 +34,17 @@ def eject_all() -> bool:
     return _run_enject_logic("$true")
 
 def eject_by_letter(letter: str) -> bool:
+    """
+    Ejects a specific drive identified by its drive letter.
+
+    The function normalizes the input, so both "E" and "e": are valid.
+
+    Args:
+        letter (str): The drive letter (e.g., "E", "E:", or " e ").
+    
+    Returns:
+        bool: True if the specific drive was successfully ejected, False otherwise.
+    """
     clean_letter = letter.strip().replace(":", "").upper()
     return _run_enject_logic(f"$_.DriveLetter -eq '{clean_letter}:'")
 
