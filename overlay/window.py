@@ -90,7 +90,12 @@ class ShadowOverlay(QMainWindow):
         self.hotkeys_manager = manager
      
     def _toggle_eject_mode(self, checked: bool) -> None:
-        """"""
+        """
+        Toggles between 'Eject All' and 'Single Drive' modes.
+
+        Updates the configuration and enables/disables corresponding UI actions
+        based on the selected mode.
+        """
         self.eject_all_mode = checked
         self.settings.setValue("eject_all_mode", checked)
 
@@ -98,7 +103,12 @@ class ShadowOverlay(QMainWindow):
         self.setup_action.setEnabled(not checked)
     
     def _change_usb_letter(self) -> None:
-        """"""
+        """
+        Opens and input dialog to update the target USB drive letter.
+
+        Normalizes the input to a single uppercase character, persists it
+        to settings, and updates the action label.
+        """
         text, ok = QInputDialog.getText(
             self, "Настройка USB",
             "Введите букву флешки (например, G):",
@@ -112,6 +122,12 @@ class ShadowOverlay(QMainWindow):
             self.eject_action.setText(f"Извлечь диск ({new_letter}:)")
     
     def _handle_eject(self) -> None:
+        """
+        Executes the ejection process based on the current mode.
+
+        Triggers either a full system-wide ejection or a specific drive ejection
+        depending on 'eject_all_mode', then displays a notification with the result.
+        """
         from src.devices import eject_by_letter, eject_all
 
         if self.eject_all_mode:
@@ -172,10 +188,12 @@ class ShadowOverlay(QMainWindow):
         self.current_pixmap = None
     
     def mouseMoveEvent(self, event: QMouseEvent) -> None:
+        """Updates the local cursor position and triggers a repaint."""
         self.cursor_pos = self.mapFromGlobal(event.globalPosition().toPoint())
         self.update()
     
     def wheelEvent(self, event: QWheelEvent) -> None:
+        """Adjusts the zoom factor based on the mouse wheel delta."""
         delta = event.angleDelta().y()
 
         if delta == 0:
