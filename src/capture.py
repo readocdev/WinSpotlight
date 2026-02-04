@@ -28,7 +28,7 @@ class CameraManager:
         # grab() might return None if the screen hasn't changed or is locked
         return self.camera.grab()
 
-    def restarst(self) -> None:
+    def restarts(self) -> None:
         """
         Reinitializes the camera instance.
         Useful when changing screen resolution or display settings.
